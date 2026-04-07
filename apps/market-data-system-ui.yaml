@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/sivejozi/market-data-system-ui-gitops
+    repoURL: https://github.com/sivejozi/market-data-system-gitops
     targetRevision: HEAD
     path: market-data-system-ui
   destination:
