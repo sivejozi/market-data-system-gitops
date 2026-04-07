@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marketguard-ui
+  namespace: marketguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: marketguard-ui
+  template:
+    metadata:
+      labels:
+        app: marketguard-ui
+    spec:
+      containers:
+        - name: marketguard-ui
+          image: ghcr.io/sive-jozi/marketguard-ui:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"

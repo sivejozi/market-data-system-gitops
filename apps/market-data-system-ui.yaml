@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: marketguard-ui
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sive-jozi/market-data-system-ui-gitops
+    targetRevision: HEAD
+    path: market-data-system-ui
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: marketguard
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
