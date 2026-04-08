@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: python-ml-service
   namespace: marketguard
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"    # ← deploy second
 spec:
   selector:
     app: python-ml-service
