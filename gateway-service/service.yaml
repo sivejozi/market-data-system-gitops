@@ -4,7 +4,7 @@ metadata:
   name: gateway-service
   namespace: marketguard
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   selector:
     app: gateway-service
