@@ -18,6 +18,20 @@ spec:
           image: ghcr.io/sivejozi/gateway-service:40aea89d3e84b9252e263b9d2925ebc0f1ad25e6
           ports:
             - containerPort: 8082
+          env:
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
+              value: http://discovery-service.marketguard.svc.cluster.local:8061/eureka/
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: gateway-secrets
+                  key: JWT_SECRET
+            - name: JWT_EXPIRATION
+              value: "86400000"
+            - name: SERVICES_VALIDATION_URL
+              value: http://validation-prediction-service.marketguard.svc.cluster.local:8080
+            - name: SERVICES_USER_URL
+              value: http://user-service.marketguard.svc.cluster.local:8081
           resources:
             requests:
               memory: "512Mi"
