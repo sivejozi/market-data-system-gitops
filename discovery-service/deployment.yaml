@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: discovery-service
-          image: ghcr.io/sivejozi/discovery-service:latest
+          image: ghcr.io/sivejozi/discovery-service:a1d22dd8b40a75e61bbd606ec6066581be06182e
           ports:
             - containerPort: 8061
           resources:
