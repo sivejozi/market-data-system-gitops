@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: user-service
   namespace: marketguard
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: 1
   selector:
@@ -15,16 +17,36 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: ghcr.io/sivejozi/user-service:40aea89d3e84b9252e263b9d2925ebc0f1ad25e6
+          image: ghcr.io/sivejozi/user-service:latest
           ports:
             - containerPort: 8081
           env:
             - name: EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
               value: http://discovery-service.marketguard.svc.cluster.local:8061/eureka/
-            - name: SERVICES_VALIDATION_URL
-              value: http://validation-prediction-service.marketguard.svc.cluster.local:8080
-            - name: SERVICES_USER_URL
-              value: http://user-service.marketguard.svc.cluster.local:8081
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-secrets
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-secrets
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-secrets
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-secrets
+                  key: JWT_SECRET
+            - name: JWT_EXPIRATION
+              value: "86400000"
+            - name: JASYPT_ENCRYPTOR_PASSWORD
+              value: cp-pass
           resources:
             requests:
               memory: "512Mi"
