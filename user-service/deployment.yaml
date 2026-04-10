@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: marketguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: ghcr.io/sivejozi/user-service:40aea89d3e84b9252e263b9d2925ebc0f1ad25e6
+          ports:
+            - containerPort: 8081
+          env:
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
+              value: http://discovery-service.marketguard.svc.cluster.local:8061/eureka/
+            - name: SERVICES_VALIDATION_URL
+              value: http://validation-prediction-service.marketguard.svc.cluster.local:8080
+            - name: SERVICES_USER_URL
+              value: http://user-service.marketguard.svc.cluster.local:8081
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            failureThreshold: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            failureThreshold: 3
