@@ -44,7 +44,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: 8061
+              port: 8082
             initialDelaySeconds: 30
             periodSeconds: 10
           livenessProbe:
