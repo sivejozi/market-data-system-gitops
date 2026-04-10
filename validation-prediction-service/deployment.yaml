@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: validation-prediction-service
   namespace: marketguard
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -9,15 +9,15 @@ spec:
   replicas: 0
   selector:
     matchLabels:
-      app: user-service
+      app: validation-prediction-service
   template:
     metadata:
       labels:
-        app: user-service
+        app: validation-prediction-service
     spec:
       containers:
-        - name: user-service
-          image: ghcr.io/sivejozi/user-service:9d6f1100a8251374a421ee20712916921ae3ff16
+        - name: validation-prediction-service
+          image: ghcr.io/sivejozi/validation-prediction-service:latest
           ports:
             - containerPort: 8081
           env:
@@ -26,22 +26,22 @@ spec:
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 secretKeyRef:
-                  name: user-service-secrets
+                  name: validation-prediction-service-secrets
                   key: SPRING_DATASOURCE_URL
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: user-service-secrets
+                  name: validation-prediction-service-secrets
                   key: SPRING_DATASOURCE_USERNAME
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: user-service-secrets
+                  name: validation-prediction-service-secrets
                   key: SPRING_DATASOURCE_PASSWORD
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: user-service-secrets
+                  name: validation-prediction-service-secrets
                   key: JWT_SECRET
             - name: JWT_EXPIRATION
               value: "86400000"
@@ -56,13 +56,13 @@ spec:
               cpu: "500m"
           readinessProbe:
             tcpSocket:
-              port: 8081
+              port: 8080
             initialDelaySeconds: 60
             periodSeconds: 15
             failureThreshold: 5
           livenessProbe:
             tcpSocket:
-              port: 8081
+              port: 8080
             initialDelaySeconds: 90
             periodSeconds: 20
             failureThreshold: 3
