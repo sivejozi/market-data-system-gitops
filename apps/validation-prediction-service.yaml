@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: user-service
+  name: validation-prediction-service
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/sivejozi/market-data-system-gitops.git
     targetRevision: HEAD
-    path: user-service
+    path: validation-prediction-service
   destination:
     server: https://kubernetes.default.svc
     namespace: marketguard
