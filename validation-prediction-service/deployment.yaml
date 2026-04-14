@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: validation-prediction-service
-          image: ghcr.io/sivejozi/validation-prediction-service:bac8977ffb41fcec82a7a31c827bb5c5c3c03cf4
+          image: ghcr.io/sivejozi/validation-prediction-service:71d99d9ece1cb8b7441089df7a0cafa0520418b5
           ports:
             - containerPort: 8081
           env:
