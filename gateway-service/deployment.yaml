@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gateway-service
-          image: ghcr.io/sivejozi/gateway-service:40aea89d3e84b9252e263b9d2925ebc0f1ad25e6
+          image: ghcr.io/sivejozi/gateway-service:70b3e212dce1f1f3a5413ea236f64cf3886ce0db
           ports:
             - containerPort: 8082
           env:
