@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: marketguard-ui
-          image: ghcr.io/sivejozi/market-data-system-ui:70b3e212dce1f1f3a5413ea236f64cf3886ce0db
+          image: ghcr.io/sivejozi/market-data-system-ui:ec8b7ba458162de2461546ae1ffcbd0aeb954afd
           ports:
             - containerPort: 80
           resources:
